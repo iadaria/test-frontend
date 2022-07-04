@@ -1,0 +1,61 @@
+type Account {
+  id: Float!
+  createdAt: DateTime!
+  updateAt: DateTime!
+  email: String!
+  name: String!
+  password: String!
+  emailIsVerified: Boolean!
+  phone: String!
+  incomes: [Income!]!
+}
+
+# A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+scalar DateTime
+
+type Income {
+  id: Float!
+  createdAt: DateTime!
+  updateAt: DateTime!
+  account: Account
+  type: String!
+  fund: String!
+  amount: Float!
+  isOld: Boolean!
+  stableScoreId: Int!
+  groupId: Int!
+  isNewStableScore: Boolean!
+  newStableScoreId: Int!
+  payId: String!
+}
+
+type Balance {
+  sum: Float!
+  fund: String!
+}
+
+type GetBalanceOutput {
+  error: String
+  ok: Boolean!
+  balance: [Balance!]!
+}
+
+type GetIncomeOutput {
+  error: String
+  ok: Boolean!
+  income: Income
+}
+
+type Query {
+  getIncome(input: GetIncomeInput!): GetIncomeOutput!
+  getBalance(input: GetBalanceInput!): GetBalanceOutput!
+}
+
+input GetIncomeInput {
+  id: Float!
+}
+
+input GetBalanceInput {
+  id: Float!
+}
+
